@@ -56,6 +56,7 @@ verbose() {
   fi
 }
 
+# Affiche le message reçu si le mode DEBUG est activé
 debug() {
   if test "$DEBUG" -ne 0;
   then
@@ -63,6 +64,7 @@ debug() {
   fi
 }
 
+# effectue quelques tests sur la disponibilité de repertoires et d'outils
 init_check() {
   if test -e $LOCK_FILE;
   then
@@ -111,6 +113,7 @@ init_check() {
     fi
   done
 }
+
 
 mirror_pad() {
   debug "[$FUNCNAME] ARGS:$@"
@@ -516,6 +519,13 @@ check_arg_projet() {
   fi
 }
 
+check_arg_urlbase() {
+  if test -z "$URL_BASE";
+  then
+    die "getopts: -b URL_BASE is mandatory" $RC_ARGS_MISSING
+  fi
+  verbose "URL_BASE=$UR_BASE"
+}
 
 ###############################################################################
 # GESTION DES ARGUMENTS DE LA LIGNE DE COMMANDE
@@ -539,10 +549,7 @@ mkdir -p "$STORE"
 LOCK_FILE="$STORE/$PROJET.lock"
 verbose "LOCK_FILE=$LOCK_FILE"
 
-if test -z "$URL_BASE";
-then
-  die "getopts: -b URL_BASE is mandatory" $RC_ARGS
-fi
+check_arg_urlbase
 
 init_check
 lock_project
