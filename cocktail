@@ -10,6 +10,7 @@ RC_ARGS=6
 RC_ARGS_DOSSIER=7
 RC_ARGS_PROJET=8
 RC_ARGS_ACTION=9
+RC_ARGS_MISSING=10
 
 end_with_code() {
   local rc=$1
@@ -491,7 +492,7 @@ check_arg_action() {
 check_arg_dossier() {
   if test -z "$DOSSIER";
   then
-    die "getopts: -d DOSSIER is mandatory" $RC_ARGS
+    die "getopts: -d DOSSIER is mandatory" $RC_ARGS_MISSING
   fi
 
   if [[ ! $DOSSIER =~ ^[a-zA-Z0-9_-]+$ ]];
@@ -505,7 +506,7 @@ check_arg_dossier() {
 check_arg_projet() {
   if test -z "$PROJET";
   then
-    die "getopts: -p PROJET is mandatory" $RC_ARGS
+    die "getopts: -p PROJET is mandatory" $RC_ARGS_MISSING
   fi
 
   verbose "PROJET:$PROJET"

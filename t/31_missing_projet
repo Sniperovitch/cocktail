@@ -12,7 +12,7 @@ OUTPUT=$(./cocktail -v \
            -g "$URL_GARDE" 2>&1 >/dev/null) 
 RC=$?
 echo -n "RC=$RC "
-if test "$RC" -ne "8";
+if test "$RC" -ne "10";
 then
   # Test raté
   echo "[FAILED]"
