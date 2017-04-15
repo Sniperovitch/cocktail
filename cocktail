@@ -473,22 +473,30 @@ shift $(($OPTIND - 1))
 verbose "ARGS=$@"
 
 
+check_arg_action() {
+  # ACTION : SHAKE est la valeur par défaut
+  if test -z "$ACTION";
+  then
+    ACTION="SHAKE"
+  fi
+
+  # ACTION : uniquement SHAKE ou UNLOCK
+  if test "$ACTION" != "SHAKE" -a "$ACTION" != "UNLOCK";
+  then
+    die "getopts: -a ne peut être que SHAKE ou UNLOCK" $RC_ARGS_ACTION
+  fi
+  verbose "ACTION=$ACTION"  
+}
+
+
+check_arg_action
+
+
+
 ###############################################################################
 # GESTION DES ARGUMENTS DE LA LIGNE DE COMMANDE
 ###############################################################################
 
-# ACTION : SHAKE est la valeur par défaut
-if test -z "$ACTION";
-then
-  ACTION="SHAKE"
-fi
-
-# ACTION : uniquement SHAKE ou UNLOCK
-if test "$ACTION" != "SHAKE" -a "$ACTION" != "UNLOCK";
-then
-  die "getopts: -a ne peut être que SHAKE ou UNLOCK" $RC_ARGS_ACTION
-fi
-verbose "ACTION=$ACTION"
 
 
 
