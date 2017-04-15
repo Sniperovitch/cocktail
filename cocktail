@@ -488,34 +488,43 @@ check_arg_action() {
   verbose "ACTION=$ACTION"  
 }
 
+check_arg_dossier() {
+  if test -z "$DOSSIER";
+  then
+    die "getopts: -d DOSSIER is mandatory" $RC_ARGS
+  fi
 
-check_arg_action
+  if [[ ! $DOSSIER =~ ^[a-zA-Z0-9_-]+$ ]];
+  then
+    die "DOSSIER '$DOSSIER' ne peut contenir que des chiffres, des lettres, - ou _" $RC_ARGS_DOSSIER
+  fi
+  verbose "DOSSIER=$DOSSIER"
+}
 
+
+check_arg_projet() {
+  if test -z "$PROJET";
+  then
+    die "getopts: -p PROJET is mandatory" $RC_ARGS
+  fi
+
+  verbose "PROJET:$PROJET"
+  if [[ ! $PROJET =~ ^[a-zA-Z0-9_-]+$ ]];
+  then
+    die "PROJET ne peut contenir que des chiffres, des lettres, - ou _" $RC_ARGS_PROJET
+  fi
+}
 
 
 ###############################################################################
 # GESTION DES ARGUMENTS DE LA LIGNE DE COMMANDE
 ###############################################################################
+check_arg_action
+check_arg_dossier
+check_arg_projet
 
 
 
-
-if test -z "$DOSSIER";
-then
-  die "getopts: -d DOSSIER is mandatory" $RC_ARGS
-fi
-
-verbose "DOSSIER=$DOSSIER"
-if [[ ! $DOSSIER =~ ^[a-zA-Z0-9_-]+$ ]];
-then
-  die "DOSSIER ne peut contenir que des chiffres, des lettres, - ou _" $RC_ARGS_DOSSIER
-fi
-
-verbose "PROJET:$PROJET"
-if [[ ! $PROJET =~ ^[a-zA-Z0-9_-]+$ ]];
-then
-  die "PROJET ne peut contenir que des chiffres, des lettres, - ou _" $RC_ARGS_PROJET
-fi
 
 WORKING_FOLDER="$WORKING_FOLDER/$PROJET"
 verbose "WORKING_FOLDER=$WORKING_FOLDER"
