@@ -13,16 +13,5 @@ OUTPUT=$(./cocktail -v \
            -b "$URL_BASE" \
            -g "$URL_GARDE" 2>&1 >/dev/null) 
 RC=$?
-echo -n "RC=$RC "
-if test "$RC" -ne "7";
-then
-  # Test raté
-  echo "[FAILED]"
-else
-  echo "[  OK  ]"
-  RC=0
-fi
-echo "$OUTPUT"
-
+_check_return 7 "$RC"
 exit "$RC"
-

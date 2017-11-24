@@ -8,6 +8,28 @@ testCOUNT=0
 # Est utilisé dans les script appelés pour formater la sortie
 export PRINTFPATTERN='%-31s %s %-70s'
 
+
+function _check_return {
+  rc_required=$1
+  RC=$2
+
+  echo -n "RC=$RC "
+  if test "$RC" -ne "$rc_required";
+  then
+    echo "[FAILED]"
+    RC=1
+  else
+    echo "[  OK  ]"
+    RC=0
+  fi
+
+  if test -n "$OUTPUT";
+  then
+    echo "$OUTPUT"
+  fi
+}
+export -f _check_return
+
 # Par défaut lance tous les scripts dans t/, qui sont executables sauf lui même (altests)
 # si un argument est donné il lance les scripts qui correspondent à $1* 
 # exemple t/alltest 1 pour lancer tous les tests qui commencent par 1
